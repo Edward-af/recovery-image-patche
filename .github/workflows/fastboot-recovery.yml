@@ -21,6 +21,7 @@ jobs:
           sudo apt update
           sudo apt install git wget lz4 tar openssl python3 -y
 
+      # Asegúrate de que este enlace sea un enlace directo de descarga
       - name: Download recovery image
         run: |
           wget https://we.tl/t-MKbgvT5uQT -O recovery.img
@@ -30,9 +31,15 @@ jobs:
           chmod +x magiskboot
           chmod +x patcher-minimal.sh
 
+      # Corre el script de parchado
       - name: Run the patching script
         run: ./patcher-minimal.sh
 
+      # Verifica si el archivo de salida está en la ruta esperada
+      - name: List output files
+        run: ls -lah output/
+
+      # Sube el archivo parchado
       - name: Upload patched image
         uses: actions/upload-artifact@v4
         with:
