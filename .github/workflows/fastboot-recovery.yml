@@ -24,16 +24,16 @@ jobs:
       # Asegúrate de que este enlace sea un enlace directo de descarga
       - name: Download recovery image
         run: |
-          wget https://we.tl/t-MKbgvT5uQT -O recovery.img
+          wget <enlace_directo_a_la_imagen> -O recovery.img  # Cambia esto a un enlace directo
 
       - name: Make patching scripts executable
         run: |
-          chmod +x magiskboot
-          chmod +x patcher-minimal.sh
+          chmod +x magiskboot          # Aquí se asume que 'magiskboot' está en la raíz
+          chmod +x patcher-minimal.sh   # Aquí se asume que 'patcher-minimal.sh' está en la raíz
 
       # Corre el script de parchado
       - name: Run the patching script
-        run: ./patcher-minimal.sh
+        run: ./patcher-minimal.sh  # Asegúrate de que la ruta sea correcta
 
       # Verifica si el archivo de salida está en la ruta esperada
       - name: List output files
