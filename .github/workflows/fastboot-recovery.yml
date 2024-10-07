@@ -21,17 +21,21 @@ jobs:
           sudo apt update
           sudo apt install git wget lz4 tar openssl python3 -y
 
+      # Aquí está el enlace de WeTransfer
       - name: Download recovery image
         run: |
-          wget https://we.tl/t-MKbgvT5uQT -O recovery.img
+          wget https://we.tl/t-MKbgvT5uQT -O recovery.img  # Este enlace no funcionará para la descarga automatizada
 
       - name: Make patching scripts executable
         run: |
-          chmod +x magiskboot
+          chmod +x tools/magiskboot
           chmod +x patcher-minimal.sh
 
       - name: Run the patching script
         run: ./patcher-minimal.sh
+
+      - name: List output files
+        run: ls -lah output/
 
       - name: Upload patched image
         uses: actions/upload-artifact@v4
