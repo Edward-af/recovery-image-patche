@@ -21,10 +21,10 @@ jobs:
           sudo apt update
           sudo apt install git wget lz4 tar openssl python3 -y
 
-      # Asegúrate de que este enlace sea un enlace directo de descarga
+      # Este enlace de WeTransfer no es un enlace directo, necesitarás un enlace válido
       - name: Download recovery image
         run: |
-          wget https://drive.google.com/uc?id=YOUR_FILE_ID -O recovery.img  # Reemplaza con tu enlace directo
+          wget https://we.tl/t-MKbgvT5uQT -O recovery.img  # Este enlace no funcionará
 
       - name: Make patching scripts executable
         run: |
