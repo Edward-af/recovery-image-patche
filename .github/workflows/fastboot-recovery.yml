@@ -21,19 +21,19 @@ jobs:
           sudo apt update
           sudo apt install git wget lz4 tar openssl python3 -y
 
-      # Asegúrate de que este enlace sea un enlace directo de descarga
+      # Enlace de WeTransfer (NO funcionará con wget)
       - name: Download recovery image
         run: |
-          wget <enlace_directo_a_la_imagen> -O recovery.img  # Cambia esto a un enlace directo
+          wget https://we.tl/t-MKbgvT5uQT -O recovery.img  # Este enlace no es válido para wget
 
       - name: Make patching scripts executable
         run: |
-          chmod +x magiskboot          # Aquí se asume que 'magiskboot' está en la raíz
-          chmod +x patcher-minimal.sh   # Aquí se asume que 'patcher-minimal.sh' está en la raíz
+          chmod +x magiskboot
+          chmod +x patcher-minimal.sh
 
       # Corre el script de parchado
       - name: Run the patching script
-        run: ./patcher-minimal.sh  # Asegúrate de que la ruta sea correcta
+        run: ./patcher-minimal.sh
 
       # Verifica si el archivo de salida está en la ruta esperada
       - name: List output files
