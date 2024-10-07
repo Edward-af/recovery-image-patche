@@ -1,49 +1,41 @@
-name: Fastboot Recovery Patcher via URL
+name: Fastboot Recovery Patcher
 
 on:
-  workflow_dispatch:
-    inputs:
-      image_url:
-        description: 'Recovery Image URL'
-        default: 'https://we.tl/t-MKbgvT5uQT'
-        required: true
-        type: string
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   patch-recovery:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4
 
       - name: Install required packages
         run: |
           sudo apt update
           sudo apt install git wget lz4 tar openssl python3 -y
-         
-      - name: Download recovery image from URL
+
+      - name: Download recovery image
         run: |
-          wget ${{ github.event.inputs.image_url }} -O recovery.img
+          wget https://we.tl/t-MKbgvT5uQT -O recovery.img
 
       - name: Make patching scripts executable
         run: |
           chmod +x magiskboot
           chmod +x patcher-minimal.sh
 
-      - name: Start patching the recovery image
+      - name: Run the patching script
         run: ./patcher-minimal.sh
 
-      - name: Upload patched recovery image
+      - name: Upload patched image
         uses: actions/upload-artifact@v4
         with:
-          path: output/output.img
           name: Patched Recovery Image
-          retention-days: 15
-
-      - name: Upload keys used in the patching process
-        uses: actions/upload-artifact@v4
-        with:
-          path: keys/*.*
-          name: Patch Keys
+          path: output/output.img
           retention-days: 15
