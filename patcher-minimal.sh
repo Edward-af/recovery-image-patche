@@ -12,7 +12,7 @@ pass=":"
 #####================================================#####
 
 # Check for necessary tools
-command -v magiskboot >/dev/null 2>&1 || { echo "magiskboot is required but not installed. Aborting." >&2; exit 1; }
+command -v "$csd/tools/magiskboot" >/dev/null 2>&1 || { echo "magiskboot is required but not installed. Aborting." >&2; exit 1; }
 command -v openssl >/dev/null 2>&1 || { echo "openssl is required but not installed. Aborting." >&2; exit 1; }
 command -v python3 >/dev/null 2>&1 || { echo "python3 is required but not installed. Aborting." >&2; exit 1; }
 
@@ -50,10 +50,8 @@ existance "$csd/keys/phh.pem" ":" "openssl genrsa -f4 -out $csd/keys/phh.pem 409
 [ -d "$csd/fragments" ] || mkdir "$csd/fragments"
 cd fragments
 echo "fragmenting image for patching!"
-$csd/magiskboot unpack "$csd/header.img" || { echo "Failed to unpack header.img. Aborting."; exit 1; }
-$csd/magiskboot cpio ramdisk.cpio extract || { echo "Failed to extract ramdisk.cpio. Aborting."; exit 1; }
+$csd/tools/magiskboot unpack "$csd/header.img" || { echo "Failed to unpack header.img. Aborting."; exit 1; }
+$csd/tools/magiskboot cpio ramdisk.cpio extract || { echo "Failed to extract ramdisk.cpio. Aborting."; exit 1; }
 echo "showing directory..."
 ls "$csd/fragments"
 existance "$csd/fragments/system/bin/recovery" "echo successfully fragmented image!" "echo fragmentation failed! && exit 1"
-
-# Continue with patching, signing, and packaging...
