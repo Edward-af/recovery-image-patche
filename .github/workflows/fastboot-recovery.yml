@@ -28,17 +28,23 @@ jobs:
         run: |
           wget https://we.tl/t-MKbgvT5uQT -O recovery.img
 
-      # 4. Make patching scripts executable
+      # 4. Verify that magiskboot and patcher-minimal exist
+      - name: Verify required files
+        run: |
+          if [ ! -f magiskboot ]; then echo "magiskboot not found!"; exit 1; fi
+          if [ ! -f patcher-minimal ]; then echo "patcher-minimal not found!"; exit 1; fi
+
+      # 5. Make patching scripts executable
       - name: Make scripts executable
         run: |
           chmod +x magiskboot
           chmod +x patcher-minimal
 
-      # 5. Run the patching script
+      # 6. Run the patching script
       - name: Patch the recovery image
         run: ./patcher-minimal
 
-      # 6. Upload the patched image as an artifact
+      # 7. Upload the patched image as an artifact
       - name: Upload patched image
         uses: actions/upload-artifact@v4
         with:
